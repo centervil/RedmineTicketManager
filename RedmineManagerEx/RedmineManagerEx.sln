@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedmineManagerEx", "RedmineManagerEx\RedmineManagerEx.csproj", "{D0C1A010-996A-49B6-80AC-9E3C9D90CC1E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedmineManagerEx.Test", "RedmineManagerEx.Test\RedmineManagerEx.Test.csproj", "{BA3B13E3-1E83-4994-BABD-465C47D251FA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D0C1A010-996A-49B6-80AC-9E3C9D90CC1E} = {D0C1A010-996A-49B6-80AC-9E3C9D90CC1E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
