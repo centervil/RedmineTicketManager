@@ -8,29 +8,41 @@ using Redmine.Net.Api.Types;
 
 namespace RedmineManagerEx
 {
+    /// <summary>
+    /// IssueのListとDataTable形式のデータセットとの相互変換クラス
+    /// </summary>
     public class IssuesFormatter
     {
+        private IIssueFactory issueFactory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IssuesFormatter"/> class.
         /// </summary>
-        /// <param name="dataSource">IssueListに変換する表形式データ</param>
-        public IssuesFormatter(DataTable dataSource)
+        /// <param name="issueFactory"></param>
+        public IssuesFormatter(IIssueFactory issueFactory)
         {
-            this.DataSource = dataSource;
+            this.issueFactory = issueFactory;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IssuesFormatter"/> class.
+        /// DataSource ⇒ issueList変換
         /// </summary>
-        /// <param name="issues">表形式データに変換するIssueList</param>
-        public IssuesFormatter(List<ICloneable> issues)
+        /// <param name="dataSource"></param>
+        /// <returns>List of IIssueEx</returns>
+        public List<IIssueEx> ConvertToIssues(ref DataTable dataSource)
         {
-            this.IssueList = issues;
+            var issueList = new List<IIssueEx>();
+            var sourcelist = dataSource.AsEnumerable().ToList<DataRow>();
+            foreach (var source in sourcelist)
+            {
+                IIssueEx issue = this.issueFactory.Create(source);
+                issueList.Add(issue);
+            }
+
+            return issueList;
+
+            //issueList[0].Title = list[0].Field<string>("タイトル");
+            //issueList[0].IssueID = list[0].Field<int>("チケットID");
         }
-
-        public DataTable DataSource { get; private set; }
-
-        public List<ICloneable> IssueList { get; private set; }
     }
 }
