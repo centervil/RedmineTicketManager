@@ -10,7 +10,7 @@ namespace RedmineManagerEx
 {
     public class RedmineTicket : IIssueEx
     {
-        private Issue redmineIssue;
+        private Issue redmineIssue = new Issue();
 
         public RedmineTicket(DataRow source)
         {
