@@ -12,6 +12,6 @@ namespace RedmineManagerEx
         /// </summary>
         /// <param name="source"></param>
         /// <returns>IIssueEx</returns>
-        IIssueEx Create(DataRow source);
+        BaseIssueEx Create(DataRow source);
     }
 }

@@ -4,26 +4,26 @@
 
 namespace RedmineManagerEx
 {
-    public interface IIssueEx
+    public abstract class BaseIssueEx
     {
         /// <summary>
         /// Gets titleの項目名
         /// </summary>
-        string TitleStr { get; }
+        public static string TitleStr { get => "タイトル"; }
 
         /// <summary>
         /// Gets projectIDの項目名
         /// </summary>
-        string IssueIDStr { get; }
+        public static string IssueIDStr { get => "チケットID"; }
 
         /// <summary>
         /// Gets title
         /// </summary>
-        string Title { get; }
+        public virtual string Title { get; }
 
         /// <summary>
         /// Gets projectID
         /// </summary>
-        int IssueID { get; }
+        public virtual int IssueID { get; }
     }
 }

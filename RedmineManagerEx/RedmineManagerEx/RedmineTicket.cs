@@ -8,10 +8,14 @@ using System.Data;
 
 namespace RedmineManagerEx
 {
-    public class RedmineTicket : IIssueEx
+    public class RedmineTicket : BaseIssueEx
     {
         private Issue redmineIssue = new Issue();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RedmineTicket"/> class.
+        /// </summary>
+        /// <param name="source"></param>
         public RedmineTicket(DataRow source)
         {
             this.ConvertToIssue(source);
@@ -19,20 +23,14 @@ namespace RedmineManagerEx
 
         private void ConvertToIssue(DataRow source)
         {
-            this.redmineIssue.Subject = source.Field<string>(this.TitleStr);
-            this.redmineIssue.Id = source.Field<int>(this.IssueIDStr);
+            this.redmineIssue.Subject = source.Field<string>(TitleStr);
+            this.redmineIssue.Id = source.Field<int>(IssueIDStr);
         }
 
         /// <inheritdoc/>
-        public string TitleStr => "タイトル";
+        public override string Title { get => this.redmineIssue.Subject; }
 
         /// <inheritdoc/>
-        public string IssueIDStr => "チケットID";
-
-        /// <inheritdoc/>
-        public string Title { get => this.redmineIssue.Subject; }
-
-        /// <inheritdoc/>
-        public int IssueID { get => this.redmineIssue.Id; }
+        public override int IssueID { get => this.redmineIssue.Id; }
     }
 }

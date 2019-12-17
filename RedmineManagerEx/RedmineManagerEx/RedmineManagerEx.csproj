@@ -47,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IIssueEx.cs" />
+    <Compile Include="BaseIssueEx.cs" />
     <Compile Include="IIssueFactory.cs" />
     <Compile Include="RedmineTicket.cs" />
     <Compile Include="IssuesFormatter.cs" />

@@ -2,6 +2,8 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System;
+using System.Collections.Generic;
 using System.Data;
 
 namespace RedmineManagerEx
@@ -12,7 +14,7 @@ namespace RedmineManagerEx
     public class RedmineTicketFactory : IIssueFactory
     {
         /// <inheritdoc/>
-        public IIssueEx Create(DataRow source)
+        public BaseIssueEx Create(DataRow source)
         {
             return new RedmineTicket(source);
         }
