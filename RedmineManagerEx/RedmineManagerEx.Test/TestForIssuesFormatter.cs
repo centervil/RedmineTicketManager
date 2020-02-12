@@ -20,8 +20,8 @@ namespace RedmineManagerEx.Test
         {
             #region DataTableの設定
             var dataSource = new DataTable();
-            dataSource.Columns.Add(BaseIssueEx.TitleStr);
-            dataSource.Columns.Add(BaseIssueEx.IssueIDStr, Type.GetType("System.Int32"));
+            dataSource.Columns.Add(nameof(BaseIssueEx.Title));
+            dataSource.Columns.Add(nameof(BaseIssueEx.IssueID), Type.GetType("System.Int32"));
             dataSource.Rows.Add(TEST_TITLE, TEST_NO);
             #endregion
 
@@ -36,23 +36,26 @@ namespace RedmineManagerEx.Test
         [TestMethod]
         public void IssuesToDataSource()
         {
-            #region Mockの設定
-            var mockIssue = new Mock<BaseIssueEx>();
-            mockIssue.SetupGet(x => x.Title).Returns(TEST_TITLE);
-            mockIssue.SetupGet(x => x.IssueID).Returns(TEST_NO);
+            #region redmineTicketの設定
+            var dataSource = new DataTable();
+            dataSource.Columns.Add(nameof(BaseIssueEx.Title));
+            dataSource.Columns.Add(nameof(BaseIssueEx.IssueID), Type.GetType("System.Int32"));
+            dataSource.Rows.Add(TEST_TITLE, TEST_NO);
+
+            var redmineTicket = new RedmineTicket(dataSource.AsEnumerable().ToList<DataRow>()[0]);
             #endregion
 
             #region issueListの設定
             var issueList = new List<BaseIssueEx>();
-            issueList.Add(mockIssue.Object);
+            issueList.Add(redmineTicket);
             #endregion
 
             var RedmineTicketFormatter = new IssuesFormatter(new RedmineTicketFactory());
-            var dataSource = RedmineTicketFormatter.ConvertToDataTable(ref issueList);
-            var sourcelist = dataSource.AsEnumerable().ToList<DataRow>();
+            var source = RedmineTicketFormatter.ConvertToDataTable(ref issueList);
+            var sourcelist = source.AsEnumerable().ToList<DataRow>();
 
-            Assert.AreEqual(sourcelist[0].Field<string>(BaseIssueEx.TitleStr), TEST_TITLE);
-            Assert.AreEqual(sourcelist[0].Field<int>(BaseIssueEx.IssueIDStr), TEST_NO);
+            Assert.AreEqual(sourcelist[0].Field<string>(nameof(redmineTicket.Title)), TEST_TITLE);
+            Assert.AreEqual(sourcelist[0].Field<int>(nameof(redmineTicket.IssueID)), TEST_NO);
         }
     }
 }

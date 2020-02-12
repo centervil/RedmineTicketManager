@@ -1,4 +1,8 @@
-﻿using System.Data;
+﻿// <copyright file="IIssueFactory.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using System.Data;
 
 namespace RedmineManagerEx
 {

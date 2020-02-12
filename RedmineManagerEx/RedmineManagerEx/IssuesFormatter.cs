@@ -1,10 +1,12 @@
-﻿using System;
+﻿// <copyright file="IssuesFormatter.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Redmine.Net.Api.Types;
+using System.Reflection;
 
 namespace RedmineManagerEx
 {
@@ -13,7 +15,7 @@ namespace RedmineManagerEx
     /// </summary>
     public class IssuesFormatter
     {
-        private IIssueFactory issueFactory;
+        private readonly IIssueFactory issueFactory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IssuesFormatter"/> class.
@@ -28,7 +30,7 @@ namespace RedmineManagerEx
         /// DataSource ⇒ issueList変換
         /// </summary>
         /// <param name="dataSource"></param>
-        /// <returns>List of IIssueEx</returns>
+        /// <returns>List of BaseIssueEx</returns>
         public List<BaseIssueEx> ConvertToIssues(ref DataTable dataSource)
         {
             var issueList = new List<BaseIssueEx>();
@@ -46,12 +48,16 @@ namespace RedmineManagerEx
         /// IssueList ⇒ DataSource変換
         /// </summary>
         /// <param name="issueList"></param>
-        /// <returns></returns>
+        /// <returns>DataTable</returns>
         public DataTable ConvertToDataTable(ref List<BaseIssueEx> issueList)
         {
             var dataTable = new DataTable();
-            dataTable.Columns.Add(BaseIssueEx.TitleStr);
-            dataTable.Columns.Add(BaseIssueEx.IssueIDStr, Type.GetType("System.Int32"));
+            var infoArray = issueList[0].GetType().GetProperties();
+
+            foreach (var property in issueList[0].GetType().GetProperties())
+            {
+                dataTable.Columns.Add(property.Name, property.PropertyType);
+            }
 
             foreach (var issue in issueList)
             {
